@@ -7,3 +7,6 @@
 [submodule "bundle/javascript.vim"]
 	path = bundle/javascript.vim
 	url = https://github.com/serverhorror/javascript.vim.git
+[submodule "bundle/snipMate"]
+	path = bundle/snipMate
+	url = git://github.com/vim-scripts/snipMate.git

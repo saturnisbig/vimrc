@@ -130,7 +130,7 @@ if MySys() == "mac"
   set termencoding=macroman
 elseif MySys() == "linux"
   "set gfn=Monospace\ 11
-  set gfn=Inconsolata\ 12
+  set gfn=Inconsolata-g\ 12
   set guifontwide=Monospace\ 11
 elseif MySys() == "windows"
   "set guifont=Courier_New:h12:cANSI
@@ -503,14 +503,19 @@ set shiftwidth=2
 
 map <leader>t2 :set shiftwidth=2<cr>
 map <leader>t4 :set shiftwidth=4<cr>
-au FileType html,python,vim,javascript setl shiftwidth=2
-au FileType html,python,vim,javascript setl tabstop=2
+au FileType html,python,vim,javascript setl shiftwidth=4
+au FileType html,python,vim,javascript setl tabstop=4
 au FileType java setl shiftwidth=4
 au FileType java setl tabstop=4
 
 set smarttab
 set lbr
 set tw=500
+"Teddy Fish 2011年05月28日 15:17:31 
+set list
+set listchars=tab:▸\ ,eol:¬
+"set listchars=tab:>- ,eol:<
+
 
    """"""""""""""""""""""""""""""
    " => Indent
@@ -652,8 +657,8 @@ map <leader>s? z=
    "set dict-=/home/teddy/.vim/ftplugin/php_funclist.txt dict+=/home/teddy/.vim/ftplugin/php_funclist.txt
    "set complete-=k  complete+=k
    " For superTab
-   let g:SuperTabRetainCompletionType = 2
-   let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+   "let g:SuperTabRetainCompletionType = 2
+   "let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
    "Teddy Fish 2011年04月27日 22:22:11 
    inoremap <C-F>   <C-X><C-F>
    inoremap <C-N>   <C-X><C-N>
@@ -742,7 +747,7 @@ map <leader>s? z=
    """"""""""""""""""""""""""""""
    " => JavaScript section
    """""""""""""""""""""""""""""""
-   au FileType javascript so ~/vim_local/syntax/javascript.vim
+   au FileType javascript so ~/.vim/bundle/javascript.vim/syntax/javascript.vim
    function! JavaScriptFold() 
      setl foldmethod=syntax
      setl foldlevelstart=1

@@ -504,7 +504,7 @@ set shiftwidth=2
 map <leader>t2 :set shiftwidth=2<cr>
 map <leader>t4 :set shiftwidth=4<cr>
 au FileType html,python,vim,javascript setl shiftwidth=4
-au FileType html,python,vim,javascript setl tabstop=4
+au FileType html,python,vim,javascript setl tabstop=2
 au FileType java setl shiftwidth=4
 au FileType java setl tabstop=4
 
@@ -657,8 +657,8 @@ map <leader>s? z=
    "set dict-=/home/teddy/.vim/ftplugin/php_funclist.txt dict+=/home/teddy/.vim/ftplugin/php_funclist.txt
    "set complete-=k  complete+=k
    " For superTab
-   "let g:SuperTabRetainCompletionType = 2
-   "let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+   let g:SuperTabRetainCompletionType = 2
+   let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
    "Teddy Fish 2011年04月27日 22:22:11 
    inoremap <C-F>   <C-X><C-F>
    inoremap <C-N>   <C-X><C-N>

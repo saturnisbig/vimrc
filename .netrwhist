@@ -1,5 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/var/www/php5/chap4/captcha'
 let g:netrw_dirhist_2='/var/www/php5/chap4/captcha/img'
 let g:netrw_dirhist_3='/var/www/php5/chap4/captcha'
+let g:netrw_dirhist_4='/home/teddy/.vim/bundle/snipMate/autoload'
+let g:netrw_dirhist_5='/home/teddy/.vim/bundle/snipMate/plugin'
+let g:netrw_dirhist_6='/home/teddy/.vim/bundle/snipMate/syntax'

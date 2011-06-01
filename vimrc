@@ -656,9 +656,28 @@ map <leader>s? z=
    autocmd FileType javascript set dictionary+=~/.vim/ftplugin/javascript.txt
    "set dict-=/home/teddy/.vim/ftplugin/php_funclist.txt dict+=/home/teddy/.vim/ftplugin/php_funclist.txt
    "set complete-=k  complete+=k
+   "Omni completion set 2011年05月31日 22:40:33 
+   "autocmd FileType php setlocal omnifunc=phpcomplete 
+   "#Complete
+   "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+   "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+   "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+   "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+   "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+   "autocmd FileType c set omnifunc=ccomplete#Complete
+   "autocmd FileType java set omnifunc=javacomplete#Complete
+   "map somekey to reduce typing 2011年06月01日 21:01:23 
+   "
+   "inoremap <C-F>    <C-X><C-F>
+   "inoremap <C-D>    <C-X><C-D>
+   "inoremap <C-L>    <C-X><C-L>
+
    " For superTab
    let g:SuperTabRetainCompletionType = 2
    let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+   "let g:superTabMappingForward = '<nul>'
+   "let g:superTabMappingBackward = '<s-nul>'
+   
    "Teddy Fish 2011年04月27日 22:22:11 
    inoremap <C-F>   <C-X><C-F>
    inoremap <C-N>   <C-X><C-N>
@@ -821,21 +840,21 @@ map <leader>s? z=
    """""""""""""""""""""""""""""""
    " => JavaScript
    """""""""""""""""""""""""""""""
-   autocmd FileType cheetah,html,javascript inorea <buffer> cfun <c-r>=IMAP_PutTextWithMovement("function <++>(<++>) {\n<++>;\nreturn <++>;\n}")<cr>
-   autocmd filetype cheetah,html,javascript inorea <buffer> cfor <c-r>=IMAP_PutTextWithMovement("for(<++>; <++>; <++>) {\n<++>;\n}")<cr>
-   autocmd FileType cheetah,html,javascript inorea <buffer> cif <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}")<cr>
-   autocmd FileType cheetah,html,javascript inorea <buffer> cifelse <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}\nelse {\n<++>;\n}")<cr>
+   autocmd FileType cheetah,javascript inorea <buffer> cfun <c-r>=IMAP_PutTextWithMovement("function <++>(<++>) {\n<++>;\nreturn <++>;\n}")<cr>
+   autocmd filetype cheetah,javascript inorea <buffer> cfor <c-r>=IMAP_PutTextWithMovement("for(<++>; <++>; <++>) {\n<++>;\n}")<cr>
+   autocmd FileType cheetah,javascript inorea <buffer> cif <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}")<cr>
+   autocmd FileType cheetah,javascript inorea <buffer> cifelse <c-r>=IMAP_PutTextWithMovement("if(<++>) {\n<++>;\n}\nelse {\n<++>;\n}")<cr>
 
 
    """""""""""""""""""""""""""""""
    " => HTML
    """""""""""""""""""""""""""""""
-   autocmd FileType cheetah,html inorea <buffer> cahref <c-r>=IMAP_PutTextWithMovement('<a href="<++>"><++></a>')<cr>
-   autocmd FileType cheetah,html inorea <buffer> cbold <c-r>=IMAP_PutTextWithMovement('<b><++></b>')<cr>
-   autocmd FileType cheetah,html inorea <buffer> cimg <c-r>=IMAP_PutTextWithMovement('<img src="<++>" alt="<++>" />')<cr>
-   autocmd FileType cheetah,html inorea <buffer> cpara <c-r>=IMAP_PutTextWithMovement('<p><++></p>')<cr>
-   autocmd FileType cheetah,html inorea <buffer> ctag <c-r>=IMAP_PutTextWithMovement('<<++>><++></<++>>')<cr>
-   autocmd FileType cheetah,html inorea <buffer> ctag1 <c-r>=IMAP_PutTextWithMovement("<<++>><cr><++><cr></<++>>")<cr>
+   "autocmd FileType cheetah,html inorea <buffer> cahref <c-r>=IMAP_PutTextWithMovement('<a href="<++>"><++></a>')<cr>
+   "autocmd FileType cheetah,html inorea <buffer> cbold <c-r>=IMAP_PutTextWithMovement('<b><++></b>')<cr>
+   "autocmd FileType cheetah,html inorea <buffer> cimg <c-r>=IMAP_PutTextWithMovement('<img src="<++>" alt="<++>" />')<cr>
+   "autocmd FileType cheetah,html inorea <buffer> cpara <c-r>=IMAP_PutTextWithMovement('<p><++></p>')<cr>
+   "autocmd FileType cheetah,html inorea <buffer> ctag <c-r>=IMAP_PutTextWithMovement('<<++>><++></<++>>')<cr>
+   "autocmd FileType cheetah,html inorea <buffer> ctag1 <c-r>=IMAP_PutTextWithMovement("<<++>><cr><++><cr></<++>>")<cr>
 
 
    """""""""""""""""""""""""""""""
@@ -914,3 +933,6 @@ map <F6> <Esc>a<c-r>=strftime("%Y-%m-%d %H:%M:%S")
 " set 256 colors 
 set t_Co=256
 set magic
+"2011年06月01日 21:36:24 Teddy Fish -- set snipMate
+"let g:snippets_dir='~/.vim/bundle/snipMate/snippets/'
+autocmd FileType html set ft=html.markdown

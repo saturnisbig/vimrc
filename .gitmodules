@@ -9,4 +9,4 @@
 	url = https://github.com/serverhorror/javascript.vim.git
 [submodule "bundle/snipMate"]
 	path = bundle/snipMate
-	url = git://github.com/vim-scripts/snipMate.git
+	url = git://github.com/msanders/snipmate.vim.git

@@ -10,6 +10,3 @@
 [submodule "bundle/snipMate"]
 	path = bundle/snipMate
 	url = git://github.com/msanders/snipmate.vim.git
-[submodule "bundle/limp"]
-	path = bundle/limp
-	url = git://github.com/mikaelj/limp.git

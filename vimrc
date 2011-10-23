@@ -74,6 +74,11 @@ fun! MySys()
   endif
 endfun
 
+"add file encode related
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,GB18030,gbk
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -150,13 +155,16 @@ if has("gui_running")
   "set background=light
   "colorscheme solarized
   colorscheme zenburn
+  "colorscheme vilight
 else
-  "set background=dark
+  set background=dark
   "set background=light
   "colorscheme zellner
   "colorscheme wombat
-  colorscheme zenburn
-  "colorscheme solarized
+  colorscheme solarized
+  "colorscheme vividchalk
+  "colorscheme zenburn
+  "colorscheme vilight
 endif
 
 "Some nice mapping to switch syntax (useful if one mixes different languages in one file)
@@ -503,10 +511,10 @@ set shiftwidth=2
 
 map <leader>t2 :set shiftwidth=2<cr>
 map <leader>t4 :set shiftwidth=4<cr>
-au FileType html,python,vim,javascript setl shiftwidth=4
+au FileType html,python,vim,javascript setl shiftwidth=2
 au FileType html,python,vim,javascript setl tabstop=2
-au FileType java setl shiftwidth=4
-au FileType java setl tabstop=4
+au FileType java,php setl shiftwidth=4
+au FileType java,php setl tabstop=4
 
 set smarttab
 set lbr
@@ -642,6 +650,10 @@ map <leader>s? z=
    let html_use_css = 1
    let html_number_lines = 0
    let use_xhtml = 1
+   "Teddy Fish 2011年08月16日 22:03:37 smarty filetype
+   au BufRead,BufNewFile *.tpl set filetype=smarty
+   au Filetype smarty exec('set dictionary=/home/teddy/.vim/syntax/smarty.vim')
+   au Filetype smarty set complete+=k
 
 
    """"""""""""""""""""""""""""""
@@ -675,6 +687,7 @@ map <leader>s? z=
    " For superTab
    let g:SuperTabRetainCompletionType = 2
    let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+   "let g:SuperTabDefaultCompletionType = "context" 
    "let g:superTabMappingForward = '<nul>'
    "let g:superTabMappingBackward = '<s-nul>'
    
@@ -936,3 +949,9 @@ set magic
 "2011年06月01日 21:36:24 Teddy Fish -- set snipMate
 "let g:snippets_dir='~/.vim/bundle/snipMate/snippets/'
 autocmd FileType html set ft=html.markdown
+" add php zend snippets 2011年07月22日 21:34:51 
+" ExtractSnipsFile('~/.vim/bundle/snipMate/snippets/zend', 'php') 
+let g:snips_author = 'Teddy'
+"indent with lispindent.lisp 2011年06月18日 11:13:02 
+autocmd FileType lisp,scheme,art setlocal equalprg=lispindent.lisp
+"set equalprg=lispindent.lisp

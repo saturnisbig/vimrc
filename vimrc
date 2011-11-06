@@ -86,8 +86,31 @@ set fileencodings=ucs-bom,utf-8,GB18030,gbk
 let Tlist_Ctags_cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 30
 let Tlist_Auto_Open = 0
-map <leader>t :Tlist<cr>
+
+" Load a tag file
+" Loads a tag file from ~/.vim.tags/, based on the argument provided. The
+" command "Ltag"" is mapped to this function.
+:function! LoadTags(file)
+:   let tagspath = $HOME . "/.vim.tags/" . a:file
+:   let tagcommand = 'set tags+=' . tagspath
+:   execute tagcommand
+:endfunction
+:command! -nargs=1 Ltag :call LoadTags("<args>")
 " added by saturn for TOhtml
+
+" Cscope settings
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current dir
+  if filereadable("cscope.out")
+    cs add cscope.out
+  endif
+  set csverb
+endif
+
 
 "Get out of VI's compatible mode..
 set nocompatible
@@ -136,7 +159,7 @@ if MySys() == "mac"
 elseif MySys() == "linux"
   "set gfn=Monospace\ 11
   set gfn=Inconsolata-g\ 12
-  set guifontwide=Monospace\ 11
+  set guifontwide=WenQuanYi\ Micro\ Hei\ 11
 elseif MySys() == "windows"
   "set guifont=Courier_New:h12:cANSI
   au BufRead set guifontwide=Consolas:h12
@@ -154,8 +177,8 @@ if has("gui_running")
   "colorscheme wombat
   "set background=light
   "colorscheme solarized
-  colorscheme zenburn
-  "colorscheme vilight
+  "colorscheme zenburn
+  colorscheme vilight
 else
   set background=dark
   "set background=light
@@ -263,7 +286,9 @@ set hlsearch
   endfunction
 
   "Format the statusline
-  set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+  "set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+  " 2011年10月30日 10:47:48  add the fileencoding support http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line
+  set statusline=\ %f%m%r%h\ %y%{\"[\".(&fenc==\"\"?&enc:&fenc).\"]\"}\ \ CWD:\ %r%{CurDir()}%h\ \ Line:\ %l/%L:%c
 
 
 
@@ -553,6 +578,12 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugin configuration
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   """""""""""""""""""""""""""""
+   " => Vim-task --map Ctrl+Command+Enter for toggling task status
+   """"""""""""""""""""""""""""
+   inoremap <silent> <buffer> <C-D-CR> <ESC>:call Toggle_task_status()<CR>i
+   noremap <silent> <buffer> <C-D-CR> :call Toggle_task_status()<CR>
+
    """"""""""""""""""""""""""""""
    " => Vim Grep
    """"""""""""""""""""""""""""""
@@ -631,7 +662,7 @@ map <leader>s? z=
    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
    " => Todo
    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-   au BufNewFile,BufRead *.todo so ~/vim_local/syntax/amido.vim
+   "au BufNewFile,BufRead *.todo so ~/vim_local/syntax/amido.vim
 
    """"""""""""""""""""""""""""""
    " => VIM
@@ -654,6 +685,9 @@ map <leader>s? z=
    au BufRead,BufNewFile *.tpl set filetype=smarty
    au Filetype smarty exec('set dictionary=/home/teddy/.vim/syntax/smarty.vim')
    au Filetype smarty set complete+=k
+" HTML tag closing macro
+:let g:closetag_html_style=1
+:autocmd Filetype html source $HOME . "/.vim/closetag.vim"
 
 
    """"""""""""""""""""""""""""""

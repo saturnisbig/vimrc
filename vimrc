@@ -98,6 +98,20 @@ let Tlist_Auto_Open = 0
 :command! -nargs=1 Ltag :call LoadTags("<args>")
 " added by saturn for TOhtml
 
+" Vimwiki to use markdow syntax to replace wiki syntax
+let g:vimwiki_list = [
+      \{'path': '~/Documents/Wiki/Default/',
+      \ 'path_html': '~/Documents/Wiki/Sites/wiki/',
+      \ 'html_footer': '~/Documents/Wiki/Default/footer.tpl',
+      \ 'html_header': '~/Documents/Wiki/Default/header.tpl',
+      \ 'syntax': 'markdown',
+      \ 'auto_export': 0}
+      \]
+"\ 'index' : 'main',
+"\ 'ext'   : '.markdown',
+" \ 'syntax': 'markdown',
+" \ 'ext'   : '.markdown',
+
 " Cscope settings
 if has("cscope")
   set csprg=/usr/bin/cscope
@@ -111,6 +125,9 @@ if has("cscope")
   set csverb
 endif
 
+"Session related. Teddy Fish 20/04/12 21:39:11
+"set sessionoptions-=curdir
+"set sessionoptions+=sesdir
 
 "Get out of VI's compatible mode..
 set nocompatible
@@ -149,7 +166,11 @@ nmap <leader>f :find<cr>
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Enable syntax hl
-syntax enable
+"syntax enable
+syntax on
+
+""syntax": "markdown"
+
 
 "Set font to Monaco 10pt
 if MySys() == "mac"
@@ -158,8 +179,10 @@ if MySys() == "mac"
   set termencoding=macroman
 elseif MySys() == "linux"
   "set gfn=Monospace\ 11
-  set gfn=Inconsolata-g\ 12
-  set guifontwide=WenQuanYi\ Micro\ Hei\ 11
+  "set gfn=Inconsolata-g\ 12
+  set gfn=Panic\ Sans\ 12
+  set guifontwide=WenQuanYi\ Zen\ Hei\ 12
+  "set guifontwide=WenQuanYi\ Micro\ Hei\ 11
 elseif MySys() == "windows"
   "set guifont=Courier_New:h12:cANSI
   au BufRead set guifontwide=Consolas:h12
@@ -172,18 +195,20 @@ endif
 
 if has("gui_running")
   set guioptions-=T
-  let psc_style='cool'
+  set background=dark
+  "let psc_style='cool'
   "colorscheme ps_color
   "colorscheme wombat
   "set background=light
-  "colorscheme solarized
+  colorscheme solarized
   "colorscheme zenburn
-  colorscheme vilight
+  "colorscheme vilight
 else
   set background=dark
   "set background=light
   "colorscheme zellner
   "colorscheme wombat
+  "let g:solarized_termcolors=256
   colorscheme solarized
   "colorscheme vividchalk
   "colorscheme zenburn
@@ -196,6 +221,7 @@ map <leader>2 :set syntax=xhtml<cr>
 map <leader>3 :set syntax=python<cr>
 map <leader>4 :set syntax=javascript<cr>
 map <leader>$ :syntax sync fromstart<cr>
+map <leader>5 :set syntax=markdown<cr>
 
 autocmd BufEnter * :syntax sync fromstart
 
@@ -390,9 +416,9 @@ imap <d-l> <esc>:exec "normal f" . leavechar<cr>a
 " => General Abbrevs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "My information
-"iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 "iab xname Amir Salihefendic
-iab xdate <c-r>=strftime("%Y年%m月%d日 %H:%M:%S")<cr>
+"iab xdate <c-r>=strftime("%Y年%m月%d日 %H:%M:%S")<cr>
 iab xname Teddy Fish
 
 
@@ -525,7 +551,8 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Enable folding, I find it very useful
 set nofen
-set fdl=0
+set fdl=1
+set fdm=indent
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -536,10 +563,17 @@ set shiftwidth=2
 
 map <leader>t2 :set shiftwidth=2<cr>
 map <leader>t4 :set shiftwidth=4<cr>
-au FileType html,python,vim,javascript setl shiftwidth=2
-au FileType html,python,vim,javascript setl tabstop=2
+au FileType vim,javascript setl shiftwidth=2
+au FileType vim,javascript setl tabstop=2
 au FileType java,php setl shiftwidth=4
 au FileType java,php setl tabstop=4
+" for Markdown syntax 
+autocmd FileType markdown,html setl shiftwidth=4 sts=4 ts=4
+" Teddy Fish added for python indent
+autocmd FileType python setl ts=4 et sta sw=4 sts=4
+" turn on python syntax highlight 2012年04月12日 01:04:17 
+let python_highlight_all=1
+"set iskeyword+=:
 
 set smarttab
 set lbr
@@ -581,8 +615,9 @@ map <leader>s? z=
    """""""""""""""""""""""""""""
    " => Vim-task --map Ctrl+Command+Enter for toggling task status
    """"""""""""""""""""""""""""
-   inoremap <silent> <buffer> <C-D-CR> <ESC>:call Toggle_task_status()<CR>i
-   noremap <silent> <buffer> <C-D-CR> :call Toggle_task_status()<CR>
+   "inoremap <silent> <buffer> <C-D-CR> <ESC>:call Toggle_task_status()<CR>i
+   autocmd FILETYPE task,tasks inoremap <silent> <buffer> <leader>tt <ESC>:call Toggle_task_status()<CR>i
+   noremap <silent> <buffer> <leader>tk :call Toggle_task_status()<CR>
 
    """"""""""""""""""""""""""""""
    " => Vim Grep
@@ -682,12 +717,12 @@ map <leader>s? z=
    let html_number_lines = 0
    let use_xhtml = 1
    "Teddy Fish 2011年08月16日 22:03:37 smarty filetype
-   au BufRead,BufNewFile *.tpl set filetype=smarty
+   au BufRead,BufNewFile *.tpl set filetype=smarty.html
    au Filetype smarty exec('set dictionary=/home/teddy/.vim/syntax/smarty.vim')
    au Filetype smarty set complete+=k
 " HTML tag closing macro
-:let g:closetag_html_style=1
-:autocmd Filetype html source $HOME . "/.vim/closetag.vim"
+":let g:closetag_html_style=1
+"autocmd Filetype html source "/home/teddy/.vim/closetag.vim"
 
 
    """"""""""""""""""""""""""""""
@@ -703,15 +738,14 @@ map <leader>s? z=
    "set dict-=/home/teddy/.vim/ftplugin/php_funclist.txt dict+=/home/teddy/.vim/ftplugin/php_funclist.txt
    "set complete-=k  complete+=k
    "Omni completion set 2011年05月31日 22:40:33 
-   "autocmd FileType php setlocal omnifunc=phpcomplete 
-   "#Complete
-   "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-   "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-   "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-   "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-   "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-   "autocmd FileType c set omnifunc=ccomplete#Complete
-   "autocmd FileType java set omnifunc=javacomplete#Complete
+   autocmd FileType php setlocal omnifunc=phpcomplete #Complete
+   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+   autocmd FileType c set omnifunc=ccomplete#Complete
+   autocmd FileType java set omnifunc=javacomplete#Complete
    "map somekey to reduce typing 2011年06月01日 21:01:23 
    "
    "inoremap <C-F>    <C-X><C-F>
@@ -719,8 +753,11 @@ map <leader>s? z=
    "inoremap <C-L>    <C-X><C-L>
 
    " For superTab
+   " 0 don't record last completion.
+   " 1 record last completion method until use other method.
+   " 2 record last completion until the user hit 'ESC'
    let g:SuperTabRetainCompletionType = 2
-   let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+   "let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
    "let g:SuperTabDefaultCompletionType = "context" 
    "let g:superTabMappingForward = '<nul>'
    "let g:superTabMappingBackward = '<s-nul>'
@@ -735,9 +772,9 @@ map <leader>s? z=
    " => Python section
    """"""""""""""""""""""""""""""
    "Run the current buffer in python - ie. on leader+space
-   au FileType python so ~/vim_local/syntax/python.vim
+   "au FileType python so ~/vim_local/syntax/python.vim
    autocmd FileType python map <buffer> <leader><space> :w!<cr>:!python %<cr>
-   autocmd FileType python so ~/vim_local/plugin/python_fold.vim
+   "autocmd FileType python so ~/vim_local/plugin/python_fold.vim
 
    "Set some bindings up for 'compile' of python
    autocmd FileType python set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
@@ -839,8 +876,8 @@ map <leader>s? z=
    """"""""""""""""""""""""""""""
    " => HTML
    """""""""""""""""""""""""""""""
-   au FileType html,cheetah set ft=xml
-   au FileType html,cheetah set syntax=html
+   "au FileType html,cheetah set ft=xml
+   "au FileType html,cheetah set syntax=html
 
 
    """"""""""""""""""""""""""""""
@@ -882,7 +919,8 @@ map <leader>s? z=
    autocmd FileType python inorea <buffer> cfor <c-r>=IMAP_PutTextWithMovement("for <++> in <++>:\n<++>")<cr>
    autocmd FileType python inorea <buffer> cif <c-r>=IMAP_PutTextWithMovement("if <++>:\n<++>")<cr>
    autocmd FileType python inorea <buffer> cifelse <c-r>=IMAP_PutTextWithMovement("if <++>:\n<++>\nelse:\n<++>")<cr>
-
+  " use templates for new .py file
+  autocmd BufNewFile *.py 0r ~/.vim/templates/python/tpl.py
 
    """""""""""""""""""""""""""""""
    " => JavaScript
@@ -982,10 +1020,30 @@ set t_Co=256
 set magic
 "2011年06月01日 21:36:24 Teddy Fish -- set snipMate
 "let g:snippets_dir='~/.vim/bundle/snipMate/snippets/'
-autocmd FileType html set ft=html.markdown
+"autocmd FileType html set ft=html.markdown
+
 " add php zend snippets 2011年07月22日 21:34:51 
 " ExtractSnipsFile('~/.vim/bundle/snipMate/snippets/zend', 'php') 
 let g:snips_author = 'Teddy'
 "indent with lispindent.lisp 2011年06月18日 11:13:02 
 autocmd FileType lisp,scheme,art setlocal equalprg=lispindent.lisp
 "set equalprg=lispindent.lisp
+
+" Zen coding
+let g:user_zen_settings = {
+      \ 'indentation' : ' ',
+      \ 'perl' : {
+      \   'alias' : {
+      \     'req' : 'require'
+      \   },
+      \   'snippets' : {
+      \     'use':'use strict\n use warnings\n\n',
+      \     'warn': "warn \"|\";",
+      \  }
+      \}
+      \}
+let g:user_zen_expandabbr_key='<c-y>'
+let g:user_zen_complete_tag=1
+" Teddy Fish 2012年03月31日 20:02:58 
+" When quit and reopen the file, return to the last edit place when quit.
+" au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif

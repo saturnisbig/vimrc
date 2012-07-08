@@ -62,6 +62,8 @@
 "   :helpgrep nocompatible
 "   then press <leader>c to see the results, or :botright cw
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" for tpl
+runtime bundles/tplugin_vim/macros/tplugin.vim
 " use pathogen.vim to manage plugins
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -417,6 +419,8 @@ imap <d-l> <esc>:exec "normal f" . leavechar<cr>a
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "My information
 iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
+iab tdate <c-r>=strftime("=%d%m%Y")<cr>
+
 "iab xname Amir Salihefendic
 "iab xdate <c-r>=strftime("%Y年%m月%d日 %H:%M:%S")<cr>
 iab xname Teddy Fish
@@ -616,6 +620,7 @@ map <leader>s? z=
    " => Vim-task --map Ctrl+Command+Enter for toggling task status
    """"""""""""""""""""""""""""
    "inoremap <silent> <buffer> <C-D-CR> <ESC>:call Toggle_task_status()<CR>i
+   autocmd BufNewFile,BufRead todo.txt,*.task,*.tasks setfiletype task
    autocmd FILETYPE task,tasks inoremap <silent> <buffer> <leader>tt <ESC>:call Toggle_task_status()<CR>i
    noremap <silent> <buffer> <leader>tk :call Toggle_task_status()<CR>
 
